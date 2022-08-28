@@ -1,19 +1,25 @@
+// pages/notes/index.jsx
+import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
-const Page = () => {
-  const router = useRouter();
-  const { id } = router.query;
+export default function Page() {
+  const notes = new Array(15)
+    .fill(1)
+    .map((e, i) => ({ id: i, title: `Note: ${i}` }));
 
   return (
     <div>
-      <h1>Note {id}</h1>
+      <h1>Notes</h1>
 
-      <Link href="/notes">
-        <a>Notes</a>
-      </Link>
+      {notes.map((note) => (
+        <div key={note.id}>
+          <Link href="/notes/[id]" as={`/notes/${note.id}`}>
+            <a>
+              <strong>{note.title}</strong>
+            </a>
+          </Link>
+        </div>
+      ))}
     </div>
   );
-};
-
-export default Page;
+}
